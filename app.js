@@ -13,101 +13,125 @@ const render = require("./lib/htmlRenderer");
 const teamMembers = [];
 const ids = [];
 
-function Menu() {
-    function createManager() {
-        console.log("Build Your Dev Team!");
-        inquirer.prompt([
-            {
-                type: 'input',
-                name: 'managerName',
-                message: 'What is your managers name?',
-            },
-            {
-                type: 'number',
-                name: 'managerId',
-                message: 'What is your managers id?',
-            },
-            {
-                type: 'input',
-                name: 'managerEmail',
-                message: 'What is your managers email?',
-            },
-            {
-                type: 'number',
-                name: 'officeNum',
-                message: 'What is your managers office number?',
-            },
-        ])
-        const manager = new Manager(answers.managerName, answers.ManagerId, answers.Email, answers.officeNum);
-        teamMembers.push(manager);
-        ids.push(answers.managerId);
-        createManager()
 
-    }
-
-    function createEngineer() {
-        inquirer.prompt([
-            {
-                type: 'input',
-                name: 'engineerName',
-                message: 'What is your engineers name?',
-            },
-            {
-                type: 'number',
-                name: 'engineerId',
-                message: 'What is your engineers id?',
-            },
-            {
-                type: 'input',
-                name: 'engineerEmail',
-                message: 'What is your engineers email?',
-            },
-            {
-                type: 'input',
-                name: 'engineerGithub',
-                message: 'What is your engineers GitHub username?',
-            },
-            {
-                type: 'list',
-                name: 'addEmployee',
-                message: 'Which type of team member would you like to add?'
-            }
-        ])
-        const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
-        teamMembers.push(engineer);
-        ids.push(answers.engineerId);
-    }
-
-    function createIntern() {
-        inquirer.prompt([
-            {
-                type: 'input',
-                name: 'internName',
-                message: 'What is your interns name?',
-            },
-            {
-                type: 'number',
-                name: 'internsId',
-                message: 'What is your interns id?',
-            },
-            {
-                type: 'input',
-                name: 'internEmail',
-                message: 'What is your interns email?',
-            },
-            {
-                type: 'input',
-                name: 'internSchool',
-                message: 'What school does your intern go to?',
-            },
-        ]);
-        const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internGithub);
-        teamMembers.push(intern);
-        ids.push(answers.internId);
-    }
+function createManager() {
+    console.log("Build Your Dev Team!");
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'managerName',
+            message: 'What is your managers name?',
+        },
+        {
+            type: 'number',
+            name: 'managerId',
+            message: 'What is your managers id?',
+        },
+        {
+            type: 'input',
+            name: 'managerEmail',
+            message: 'What is your managers email?',
+        },
+        {
+            type: 'number',
+            name: 'officeNum',
+            message: 'What is your managers office number?',
+        },
+    ])
+    const manager = new Manager(answers.managerName, answers.ManagerId, answers.Email, answers.officeNum);
+    teamMembers.push(manager);
+    ids.push(answers.managerId);
+    createMember();
 
 }
 
+function createMember() {
+    inquirer.prompt([
+        {
+            type: 'list',
+            name: 'addEmployee',
+            message: 'Which type of team member would you like to add?',
+            choices: ["Engineer", "Intern", "Manager", "None"],
+        },
+    ])
+    if (answers.choices === "Engineer") {
+        createEngineer();
+    } else if (answers.choices === "Intern") {
+        createIntern();
+    } else if (answers.choices === "Manager") {
+        createManager();
+    } else {
+        render(/*teamMembers*/);
+    }
+}
+
+
+function createEngineer() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'engineerName',
+            message: 'What is your engineers name?',
+        },
+        {
+            type: 'number',
+            name: 'engineerId',
+            message: 'What is your engineers id?',
+        },
+        {
+            type: 'input',
+            name: 'engineerEmail',
+            message: 'What is your engineers email?',
+        },
+        {
+            type: 'input',
+            name: 'engineerGithub',
+            message: 'What is your engineers GitHub username?',
+        },
+        {
+            type: 'list',
+            name: 'addEmployee',
+            message: 'Which type of team member would you like to add?',
+            choices: ["Engineer", "Intern", "Manager", "None"],
+        },
+    ])
+    const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
+    teamMembers.push(engineer);
+    ids.push(answers.engineerId);
+    createMember();
+}
+
+function createIntern() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'internName',
+            message: 'What is your interns name?',
+        },
+        {
+            type: 'number',
+            name: 'internsId',
+            message: 'What is your interns id?',
+        },
+        {
+            type: 'input',
+            name: 'internEmail',
+            message: 'What is your interns email?',
+        },
+        {
+            type: 'input',
+            name: 'internSchool',
+            message: 'What school does your intern go to?',
+        },
+    ]);
+    const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internGithub);
+    teamMembers.push(intern);
+    ids.push(answers.internId);
+    createMember();
+}
+
+
+createManager();
 // Write code to use inquirer to gather information about the development team members,
 
 // and to create objects for each team member (using the correct classes as blueprints!)
