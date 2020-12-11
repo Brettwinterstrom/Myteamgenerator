@@ -37,12 +37,13 @@ function createManager() {
             name: 'officeNum',
             message: 'What is your managers office number?',
         },
-    ])
-    const manager = new Manager(answers.managerName, answers.ManagerId, answers.Email, answers.officeNum);
-    teamMembers.push(manager);
-    ids.push(answers.managerId);
-    createMember();
+    ]).then((answers) => {
+        const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.officeNum);
+        teamMembers.push(manager);
+        ids.push(answers.managerId);
+        createMember();
 
+    });
 }
 
 function createMember() {
@@ -51,18 +52,19 @@ function createMember() {
             type: 'list',
             name: 'addEmployee',
             message: 'Which type of team member would you like to add?',
-            choices: ["Engineer", "Intern", "Manager", "None"],
+            choices: ["Engineer", "Intern", "None"],
         },
-    ])
-    if (answers.choices === "Engineer") {
-        createEngineer();
-    } else if (answers.choices === "Intern") {
-        createIntern();
-    } else if (answers.choices === "Manager") {
-        createManager();
-    } else {
-        render(/*teamMembers*/);
-    }
+    ]).then((answers) => {
+        console.log(answers);
+        if (answers.addEmployee === "Engineer") {
+            createEngineer();
+        } else if (answers.addEmployee === "Intern") {
+            createIntern();
+        } else {
+            fs.writeFileSync(OUTPUT_DIR + "/team.html", render(teamMembers), "utf8");
+            return;
+        }
+    })
 }
 
 
@@ -94,11 +96,12 @@ function createEngineer() {
             message: 'Which type of team member would you like to add?',
             choices: ["Engineer", "Intern", "Manager", "None"],
         },
-    ])
-    const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
-    teamMembers.push(engineer);
-    ids.push(answers.engineerId);
-    createMember();
+    ]).then((answers) => {
+        const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
+        teamMembers.push(engineer);
+        ids.push(answers.engineerId);
+        createMember();
+    })
 }
 
 function createIntern() {
@@ -123,11 +126,12 @@ function createIntern() {
             name: 'internSchool',
             message: 'What school does your intern go to?',
         },
-    ]);
-    const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internGithub);
-    teamMembers.push(intern);
-    ids.push(answers.internId);
-    createMember();
+    ]).then((answers) => {
+        const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internGithub);
+        teamMembers.push(intern);
+        ids.push(answers.internId);
+        createMember();
+    })
 }
 
 
