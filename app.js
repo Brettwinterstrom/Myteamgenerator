@@ -113,7 +113,7 @@ function createIntern() {
         },
         {
             type: 'number',
-            name: 'internsId',
+            name: 'internId',
             message: 'What is your interns id?',
         },
         {
@@ -127,7 +127,7 @@ function createIntern() {
             message: 'What school does your intern go to?',
         },
     ]).then((answers) => {
-        const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internGithub);
+        const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
         teamMembers.push(intern);
         ids.push(answers.internId);
         createMember();
