@@ -9,7 +9,6 @@
 - [UserStory](#UserStory)
 - [Installation](#Installation)
 - [Test](#Test)
-- [Demonstration](#Demonstration)
 - [License](#License)
 - [Contributions](#contributions)
 - [Questions](#Questions)
@@ -31,10 +30,7 @@ To install necessary dependencies, run the following command:
 ## Test
 > npm run test
 ---
-<a name="Demonstration"></a>
-## Demonstration
-[Demonstration Video](https://drive.google.com/file/d/1vblLFAp_VbRcDz8JiJf15FMDH1tnDelf/view?usp=sharing).
----
+
 <a name="License"></a>
 ## License
 This project is licensed under the MIT license
